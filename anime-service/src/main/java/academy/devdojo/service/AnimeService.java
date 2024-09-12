@@ -1,16 +1,17 @@
 package academy.devdojo.service;
 import academy.devdojo.model.Anime;
 import academy.devdojo.repository.AnimeRepositoryHardCoded;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class AnimeService {
 
-    private AnimeRepositoryHardCoded animeRepository;
+    private final AnimeRepositoryHardCoded animeRepository;
 
-    public AnimeService() {
-        this.animeRepository = new AnimeRepositoryHardCoded();
-    }
 
     public List<Anime> findAll(String name) {
 

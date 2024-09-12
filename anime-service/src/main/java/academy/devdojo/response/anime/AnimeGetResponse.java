@@ -1,4 +1,4 @@
-package academy.devdojo.response;
+package academy.devdojo.response.anime;
 
 import java.time.LocalDateTime;
 
