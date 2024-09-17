@@ -1,45 +1,37 @@
 package academy.devdojo.repository;
 
 import academy.devdojo.model.Producer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class ProducerRepositoryHardcoded {
-    private static final List<Producer> PRODUCERS = new ArrayList<>();
 
-
-    static {
-        PRODUCERS.add(Producer.builder().id(1L).name("Studio Ghibli").createdAt(LocalDateTime.now()).build());
-        PRODUCERS.add(Producer.builder().id(2L).name("Madhouse").createdAt(LocalDateTime.now()).build());
-        PRODUCERS.add(Producer.builder().id(3L).name("Bones").createdAt(LocalDateTime.now()).build());
-        PRODUCERS.add(Producer.builder().id(4L).name("Toei Animation").createdAt(LocalDateTime.now()).build());
-        PRODUCERS.add(Producer.builder().id(5L).name("Sunrise").createdAt(LocalDateTime.now()).build());
-    }
+    private final ProducerData producers;
 
     public List<Producer> findAll() {
-        return PRODUCERS;
+        return producers.getProducers();
     }
 
-    public Optional<Producer> findById(long id) {
-        return PRODUCERS.stream().filter(producer -> producer.getId().equals(id)).findFirst();
+    public Optional<Producer> findById(Long id) {
+        return producers.getProducers().stream().filter(producer -> producer.getId().equals(id)).findFirst();
     }
 
     public List<Producer> findByName(String name) {
-        return PRODUCERS.stream().filter(producer -> producer.getName().contains(name)).toList();
+        return producers.getProducers().stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
     }
 
     public Producer save(Producer producer) {
-        PRODUCERS.add(producer);
+        producers.getProducers().add(producer);
         return producer;
     }
 
     public void delete(Producer producer) {
-        PRODUCERS.remove(producer);
+        producers.getProducers().remove(producer);
     }
 
     public void update(Producer producer) {

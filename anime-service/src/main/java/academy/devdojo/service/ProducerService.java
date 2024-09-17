@@ -22,7 +22,7 @@ public class ProducerService {
         return producerRepository.findByName(name);
     }
 
-    public Producer findByIdOrThrowNotFound(long id) {
+    public Producer findByIdOrThrowNotFound(Long id) {
         return producerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
     }
