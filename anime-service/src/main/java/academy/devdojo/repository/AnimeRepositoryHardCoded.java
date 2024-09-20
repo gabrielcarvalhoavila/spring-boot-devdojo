@@ -13,7 +13,6 @@ public class AnimeRepositoryHardCoded {
 
     private final AnimeData animes;
 
-
     public List<Anime> findAll() {
         return animes.getAnimes();
     }

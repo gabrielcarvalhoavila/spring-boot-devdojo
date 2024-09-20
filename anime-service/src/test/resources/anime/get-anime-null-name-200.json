@@ -1,0 +1,38 @@
+[
+  {
+    "id":1,
+    "name":"Jujutsu Kaisen",
+    "episodes":56,
+    "createdAt":"2024-09-17T17:30:00.9316657"
+  },
+  {
+    "id":2,
+    "name":"Tower of God",
+    "episodes":26,
+    "createdAt":"2024-09-17T17:30:00.9316657"
+  },
+  {
+    "id":3,
+    "name":"Dragon Ball GT",
+    "episodes":50,
+    "createdAt":"2024-09-17T17:30:00.9316657"
+  },
+  {
+    "id":4,
+    "name":"Boku no Hero",
+    "episodes":513,
+    "createdAt":"2024-09-17T17:30:00.9316657"
+  },
+  {
+    "id":5,
+    "name":"Naruto Shippuden",
+    "episodes":489,
+    "createdAt":"2024-09-17T17:30:00.9316657"
+  },
+  {
+    "id":6,
+    "name":"Black Clover",
+    "episodes":170,
+    "createdAt":"2024-09-17T17:30:00.9316657"
+  }
+]

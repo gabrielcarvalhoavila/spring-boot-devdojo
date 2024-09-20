@@ -27,11 +27,11 @@ class ProducerRepositoryHardcodedTest {
 
     @BeforeEach
     void init() {
-        var ufotable = Producer.builder().id(1L).name("Ufotable").build();
-        var kyotoAnimation = Producer.builder().id(2L).name("Kyoto Animation").build();
-        var a1Pictures = Producer.builder().id(3L).name("A-1 Pictures").build();
-        var witStudio = Producer.builder().id(4L).name("Wit Studio").build();
-        var trigger = Producer.builder().id(5L).name("Trigger").build();
+        var ufotable = Producer.builder().id(1L).name("Ufotable").createdAt(LocalDateTime.now()).build();
+        var kyotoAnimation = Producer.builder().id(2L).name("Kyoto Animation").createdAt(LocalDateTime.now()).build();
+        var a1Pictures = Producer.builder().id(3L).name("A-1 Pictures").createdAt(LocalDateTime.now()).build();
+        var witStudio = Producer.builder().id(4L).name("Wit Studio").createdAt(LocalDateTime.now()).build();
+        var trigger = Producer.builder().id(5L).name("Trigger").createdAt(LocalDateTime.now()).build();
 
         producerList = new ArrayList<>(List.of(ufotable, kyotoAnimation, a1Pictures, witStudio, trigger));
     }

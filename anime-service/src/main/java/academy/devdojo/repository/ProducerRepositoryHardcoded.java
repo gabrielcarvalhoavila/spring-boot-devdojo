@@ -18,10 +18,12 @@ public class ProducerRepositoryHardcoded {
     }
 
     public Optional<Producer> findById(Long id) {
+
         return producers.getProducers().stream().filter(producer -> producer.getId().equals(id)).findFirst();
     }
 
     public List<Producer> findByName(String name) {
+
         return producers.getProducers().stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
     }
 
@@ -35,7 +37,9 @@ public class ProducerRepositoryHardcoded {
     }
 
     public void update(Producer producer) {
+
         delete(producer);
+
         save(producer);
     }
 

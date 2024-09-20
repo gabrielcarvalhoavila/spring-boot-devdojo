@@ -1,0 +1,27 @@
+[
+  {
+    "id":1,
+    "name":"Ufotable",
+    "createdAt":"2024-09-17T09:23:25.125372"
+  },
+  {
+    "id":2,
+    "name":"Kyoto Animation",
+    "createdAt":"2024-09-17T09:23:25.125372"
+  },
+  {
+    "id":3,
+    "name":"A-1 Pictures",
+    "createdAt":"2024-09-17T09:23:25.125372"
+  },
+  {
+    "id":4,
+    "name":"Wit Studio",
+    "createdAt":"2024-09-17T09:23:25.125372"
+  },
+  {
+    "id":5,
+    "name":"Trigger",
+    "createdAt":"2024-09-17T09:23:25.125372"
+  }
+]

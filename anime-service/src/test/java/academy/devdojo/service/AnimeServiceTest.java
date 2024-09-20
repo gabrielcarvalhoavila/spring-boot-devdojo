@@ -68,7 +68,7 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("findAll returns a list of animes when name is found")
+    @DisplayName("findAll returns an empty list when name is not found")
     @Order(3)
     void findAll_ReturnsEmptyList_WhenNameIsNotFound() {
 
@@ -172,7 +172,7 @@ class AnimeServiceTest {
 
     @Test
     @DisplayName("update throws ResponseStatusException when Anime is not found")
-    @Order(9)
+    @Order(10)
     void update_ThrowsResponseStatusException_WhenAnimeIsNotFound() {
 
         var animeToBeUpdated = animeList.getFirst();

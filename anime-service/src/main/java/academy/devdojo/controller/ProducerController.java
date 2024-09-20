@@ -28,7 +28,7 @@ public class ProducerController {
 
 
     @GetMapping
-    public ResponseEntity<List<ProducerGetResponse>> listAll(@RequestParam(defaultValue = "") String name) {
+    public ResponseEntity<List<ProducerGetResponse>> findAll(@RequestParam(required = false) String name) {
 
         var producers = producerService.findAll(name);
 
@@ -81,7 +81,6 @@ public class ProducerController {
         var producer = mapper.toProducer(producerPutRequest);
 
         producerService.update(producer);
-
 
         return ResponseEntity.noContent().build();
     }
