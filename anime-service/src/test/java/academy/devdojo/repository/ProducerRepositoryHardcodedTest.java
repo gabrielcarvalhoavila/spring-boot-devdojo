@@ -1,5 +1,6 @@
 package academy.devdojo.repository;
 
+import academy.devdojo.commons.ProducerUtils;
 import academy.devdojo.model.Producer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -23,17 +24,15 @@ class ProducerRepositoryHardcodedTest {
     @Mock
     private ProducerData producerData;
 
+    @InjectMocks
+    private ProducerUtils producerUtils;
+
+
     private List<Producer> producerList;
 
     @BeforeEach
     void init() {
-        var ufotable = Producer.builder().id(1L).name("Ufotable").createdAt(LocalDateTime.now()).build();
-        var kyotoAnimation = Producer.builder().id(2L).name("Kyoto Animation").createdAt(LocalDateTime.now()).build();
-        var a1Pictures = Producer.builder().id(3L).name("A-1 Pictures").createdAt(LocalDateTime.now()).build();
-        var witStudio = Producer.builder().id(4L).name("Wit Studio").createdAt(LocalDateTime.now()).build();
-        var trigger = Producer.builder().id(5L).name("Trigger").createdAt(LocalDateTime.now()).build();
-
-        producerList = new ArrayList<>(List.of(ufotable, kyotoAnimation, a1Pictures, witStudio, trigger));
+        producerList = producerUtils.getNewProducers();
     }
 
     @Test
@@ -121,7 +120,7 @@ class ProducerRepositoryHardcodedTest {
     @Order(6)
     void save_ReturnsProducer_WhenSuccessful() {
 
-        var producer = Producer.builder().id(6L).name("Sunrise").createdAt(LocalDateTime.now()).build();
+        var producer = producerUtils.getNewProducer();
 
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 

@@ -1,6 +1,7 @@
 package academy.devdojo.service;
 
 
+import academy.devdojo.commons.AnimeUtils;
 import academy.devdojo.model.Anime;
 import academy.devdojo.repository.AnimeRepositoryHardCoded;
 import org.assertj.core.api.Assertions;
@@ -27,18 +28,14 @@ class AnimeServiceTest {
     private AnimeService service;
     @Mock
     private AnimeRepositoryHardCoded repository;
-    List<Anime> animeList;
+    @InjectMocks
+    private AnimeUtils animeUtils;
+
+    private List<Anime> animeList;
 
     @BeforeEach
     void init() {
-        var jujutsuKaisen = Anime.builder().id(1L).name("Jujutsu Kaisen").episodes(20L).createdAt(LocalDateTime.now()).build();
-        var towerOfGod = Anime.builder().id(2L).name("Tower of God").episodes(69L).createdAt(LocalDateTime.now()).build();
-        var dragonBallSuper = Anime.builder().id(3L).name("Dragon Ball Super").episodes(33L).createdAt(LocalDateTime.now()).build();
-        var thatTimeIGotReeincarnated = Anime.builder().id(4L).name("That time i got reincarnated as a slime").episodes(55L).createdAt(LocalDateTime.now()).build();
-        var deathNote = Anime.builder().id(5L).name("Death Note").episodes(196L).createdAt(LocalDateTime.now()).build();
-
-        animeList = new ArrayList<>(List.of(jujutsuKaisen, towerOfGod, dragonBallSuper, thatTimeIGotReeincarnated, deathNote));
-
+        animeList = animeUtils.getNewAnimes();
     }
 
     @Test
@@ -114,7 +111,7 @@ class AnimeServiceTest {
     @Order(6)
     void save_ReturnsAnime_WhenSuccessful() {
 
-        var animeToBeSaved = Anime.builder().name("Boku no Pico").id(7L).episodes(233L).createdAt(LocalDateTime.now()).build();
+        var animeToBeSaved = animeUtils.getNewAnime();
 
         BDDMockito.when(repository.save(animeToBeSaved)).thenReturn(animeToBeSaved);
 
