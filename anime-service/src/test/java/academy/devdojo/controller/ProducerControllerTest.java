@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -26,6 +27,7 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //@Import({ProducerMapperImpl.class, ProducerService.class, ProducerRepositoryHardcoded.class, ProducerData.class})
 @ComponentScan(basePackages = "academy.devdojo")
+//@ActiveProfiles("test")
 class ProducerControllerTest {
     
     private static final String URL = "/v1/producers";
@@ -46,7 +48,6 @@ class ProducerControllerTest {
 
     @SpyBean
     private ProducerRepositoryHardcoded repository;
-
 
     @BeforeEach
     void init() {
