@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="user-service" />
       </profile>
       <profile name="Annotation profile for spring-boot-devdojo" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -29,10 +30,15 @@
         <module name="anime-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="anime-service (1)" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="anime-service" options="-parameters" />
+      <module name="anime-service (1)" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>
