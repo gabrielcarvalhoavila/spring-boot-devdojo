@@ -1,5 +1,6 @@
 package academy.devdojo.service;
 
+import academy.devdojo.commons.UserUtils;
 import academy.devdojo.model.User;
 import academy.devdojo.repository.UserRepositoryHardcoded;
 import org.assertj.core.api.Assertions;
@@ -25,19 +26,14 @@ class UserServiceTest {
     private UserService service;
     @Mock
     private UserRepositoryHardcoded repository;
+    @InjectMocks
+    private UserUtils userUtils;
 
-    private final List<User> userList = new ArrayList<>();
+    private List<User> userList;
 
     @BeforeEach
     void setup() {
-        var gabriel = new User(1L, "Gabriel", "Carvalho", "gabriel.carvalho@gmail.com");
-        var dave = new User(2L, "Jane", "Smith", "Dave.Winchester@hotmail.com");
-        var emily = new User(3L, "Emily", "Clark", "emily.clark@outlook.com");
-        var nelson = new User(4L, "Nelson", "Avila", "nelson.avila@terra.com.br");
-        var chris = new User(5L, "Chris", "Evans", "chris.evans@example.com");
-        var otakao = new User(6L, "Leonardo", "Dutra", "leonardo.dutra@playvitta.com");
-
-        userList.addAll(List.of(gabriel, dave, nelson, chris, emily, otakao));
+        userList = userUtils.createNewUserList();
     }
 
     @Test
@@ -119,7 +115,7 @@ class UserServiceTest {
     @Order(6)
     void save_ReturnsUser_WhenSuccessful() {
 
-        var userToBeSaved = new User(7L, "Cleo", "Pum", "cleo.pum@globo.com.br");
+        var userToBeSaved = userUtils.createNewUser();
 
         BDDMockito.when(repository.save(userToBeSaved)).thenReturn(userToBeSaved);
 

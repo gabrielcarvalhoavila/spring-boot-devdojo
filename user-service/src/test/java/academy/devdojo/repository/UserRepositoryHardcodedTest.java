@@ -1,5 +1,6 @@
 package academy.devdojo.repository;
 
+import academy.devdojo.commons.UserUtils;
 import academy.devdojo.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -9,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,20 +22,15 @@ class UserRepositoryHardcodedTest {
     @Mock
     private UserData userData;
 
-    private final List<User> userList = new ArrayList<>();
+    @InjectMocks
+    private UserUtils userUtils;
+
+    private List<User> userList;
 
 
     @BeforeEach
     void setup() {
-        var gabriel = new User(1L, "Gabriel", "Carvalho", "gabriel.carvalho@gmail.com");
-        var dave = new User(2L, "Jane", "Smith", "Dave.Winchester@hotmail.com");
-        var emily = new User(3L, "Emily", "Clark", "emily.clark@outlook.com");
-        var nelson = new User(4L, "Nelson", "Avila", "nelson.avila@terra.com.br");
-        var chris = new User(5L, "Chris", "Evans", "chris.evans@example.com");
-        var otakao = new User(6L, "Leonardo", "Dutra", "leonardo.dutra@playvitta.com");
-
-        userList.addAll(List.of(gabriel, dave, nelson, chris, emily, otakao));
-
+        userList = userUtils.createNewUserList();
     }
 
 
@@ -138,7 +133,7 @@ class UserRepositoryHardcodedTest {
 
         BDDMockito.when(userData.getUsers()).thenReturn(userList);
 
-        var userToBeSaved = new User(7L, "Cleo", "Pum", "cleo.pum@globo.com.br");
+        var userToBeSaved = userUtils.createNewUser();
 
         var savedUser = repository.save(userToBeSaved);
 
@@ -182,8 +177,6 @@ class UserRepositoryHardcodedTest {
         Assertions.assertThat(userList).contains(userToBeUpdated);
 
     }
-
-
 
 
 }

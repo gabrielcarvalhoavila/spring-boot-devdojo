@@ -2,6 +2,7 @@ package academy.devdojo.controller;
 
 
 import academy.devdojo.commons.FileUtils;
+import academy.devdojo.commons.UserUtils;
 import academy.devdojo.model.User;
 import academy.devdojo.repository.UserData;
 import org.junit.jupiter.api.*;
@@ -38,18 +39,14 @@ class UserControllerTest {
     @Autowired
     private FileUtils fileUtils;
 
-    private final List<User> userList = new ArrayList<>();
+    @Autowired
+    private UserUtils userUtils;
+
+    private List<User> userList;
 
     @BeforeEach
     void setup() {
-        var gabriel = new User(1L, "Gabriel", "Carvalho", "gabriel.carvalho@gmail.com");
-        var dave = new User(2L, "Jane", "Smith", "Dave.Winchester@hotmail.com");
-        var emily = new User(3L, "Emily", "Clark", "emily.clark@outlook.com");
-        var nelson = new User(4L, "Nelson", "Avila", "nelson.avila@terra.com.br");
-        var chris = new User(5L, "Chris", "Evans", "chris.evans@example.com");
-        var otakao = new User(6L, "Leonardo", "Dutra", "leonardo.dutra@playvitta.com");
-
-        userList.addAll(List.of(gabriel, dave, nelson, chris, emily, otakao));
+        userList = userUtils.createNewUserList();
     }
 
 
