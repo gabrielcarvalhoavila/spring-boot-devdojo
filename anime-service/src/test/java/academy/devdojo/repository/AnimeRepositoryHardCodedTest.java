@@ -10,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,7 @@ class AnimeRepositoryHardCodedTest {
 
     @BeforeEach
     void setUp() {
-        animeList= animeUtils.getNewAnimes();
+        animeList = animeUtils.getNewAnimes();
     }
 
     @Test
@@ -54,7 +52,7 @@ class AnimeRepositoryHardCodedTest {
 
         var expectedAnime = animeList.getFirst();
 
-        Optional<Anime> optionalAnime = repository.findById(expectedAnime.getId());
+        var optionalAnime = repository.findById(expectedAnime.getId());
 
         Assertions.assertThat(optionalAnime).isPresent();
         Assertions.assertThat(optionalAnime.get().getId()).isEqualTo(expectedAnime.getId());
@@ -69,7 +67,7 @@ class AnimeRepositoryHardCodedTest {
 
         var expectedAnime = animeList.getFirst();
 
-        List<Anime> animeListByName = repository.findByName(expectedAnime.getName());
+        var animeListByName = repository.findByName(expectedAnime.getName());
 
         Assertions.assertThat(animeListByName).isNotNull().isNotEmpty();
         Assertions.assertThat(animeListByName.getFirst()).isEqualTo(expectedAnime).hasNoNullFieldsOrProperties();
@@ -108,7 +106,7 @@ class AnimeRepositoryHardCodedTest {
 
         var anime = animeUtils.getNewAnime();
 
-        Anime savedAnime = repository.save(anime);
+        var savedAnime = repository.save(anime);
 
         Assertions.assertThat(savedAnime).isNotNull().isEqualTo(anime).hasNoNullFieldsOrProperties();
 

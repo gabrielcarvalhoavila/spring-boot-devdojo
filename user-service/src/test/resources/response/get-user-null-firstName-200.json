@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "firstName": "Gabriel",
+    "lastName": "Carvalho",
+    "email": "gabriel.carvalho@gmail.com"
+  },
+  {
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "Dave.Winchester@hotmail.com"
+  },
+  {
+    "id": 3,
+    "firstName": "Emily",
+    "lastName": "Clark",
+    "email": "emily.clark@outlook.com"
+  },
+  {
+    "id": 4,
+    "firstName": "Nelson",
+    "lastName": "Avila",
+    "email": "nelson.avila@terra.com.br"
+  },
+  {
+    "id": 5,
+    "firstName": "Chris",
+    "lastName": "Evans",
+    "email": "chris.evans@example.com"
+  },
+  {
+    "id": 6,
+    "firstName": "Leonardo",
+    "lastName": "Dutra",
+    "email": "leonardo.dutra@playvitta.com"
+  }
+]
