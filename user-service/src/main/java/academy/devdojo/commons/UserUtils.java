@@ -22,6 +22,6 @@ public class UserUtils {
     }
 
     public User createNewUser(){
-        return new User(7L, "Cleo", "Pum", "cleo.pum@globo.com.br");
+        return new User(7L, "Cleo", "Pum", "cleo-pum@globo.com");
     }
 }

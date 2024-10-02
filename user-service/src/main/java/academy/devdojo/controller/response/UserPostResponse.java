@@ -1,4 +1,4 @@
 package academy.devdojo.controller.response;
 
-public record UserPostResponse(String firstName, String lastName, String email) {
+public record UserPostResponse(Long id, String firstName) {
 }

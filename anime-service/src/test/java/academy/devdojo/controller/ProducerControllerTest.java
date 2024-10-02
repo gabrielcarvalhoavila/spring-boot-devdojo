@@ -6,22 +6,27 @@ import academy.devdojo.commons.ProducerUtils;
 import academy.devdojo.model.Producer;
 import academy.devdojo.repository.ProducerData;
 import academy.devdojo.repository.ProducerRepositoryHardcoded;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @WebMvcTest(controllers = ProducerController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -29,9 +34,9 @@ import java.util.List;
 @ComponentScan(basePackages = "academy.devdojo")
 //@ActiveProfiles("test")
 class ProducerControllerTest {
-    
+
     private static final String URL = "/v1/producers";
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -226,6 +231,67 @@ class ProducerControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.status().reason("Producer not found"));
+    }
+
+    @ParameterizedTest
+    @MethodSource(value = "postArgumentsSource")
+    @DisplayName("POST v1/producers throws Bad Request when fields are invalid")
+    @Order(11)
+    void save_ThrowsBadRequest_WhenFieldsAreInvalid(String filename) throws Exception {
+
+        var invalidNameError = "Attribute 'name' is required";
+
+        var request = fileUtils.readResourcerFile(filename);
+
+        var mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/v1/producers").contentType(MediaType.APPLICATION_JSON).content(request))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        Assertions.assertThat(mvcResult.getResolvedException()).isNotNull();
+
+        var errorMessage = mvcResult.getResolvedException().getMessage();
+
+        Assertions.assertThat(errorMessage).contains(invalidNameError);
+    }
+
+    @ParameterizedTest
+    @MethodSource(value = "postArgumentsSource")
+    @DisplayName("PUT v1/producers throws Bad Request when fields are invalid")
+    @Order(11)
+    void update_ThrowsBadRequest_WhenFieldsAreInvalid(String filename) throws Exception {
+
+        var invalidNameError = "Attribute 'name' is required";
+        var invalidIdError = "Attribute 'id' is required";
+
+        var request = fileUtils.readResourcerFile(filename);
+
+        var mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/v1/producers").contentType(MediaType.APPLICATION_JSON).content(request))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        Assertions.assertThat(mvcResult.getResolvedException()).isNotNull();
+
+        var errorMessage = mvcResult.getResolvedException().getMessage();
+
+        Assertions.assertThat(errorMessage).contains(invalidNameError, invalidIdError);
+    }
+
+    private static Stream<Arguments> postArgumentsSource(){
+        return Stream.of(
+                Arguments.of("/producer/post-request-producer-blank-fields-400.json"),
+                Arguments.of("/producer/post-request-producer-empty-fields-400.json"),
+                Arguments.of("/producer/post-request-producer-null-fields-400.json")
+        );
+    }
+
+    private static Stream<Arguments> putArgumentsSource(){
+        return Stream.of(
+                Arguments.of("/producer/put-request-producer-blank-fields-400.json"),
+                Arguments.of("/producer/put-request-producer-empty-fields-400.json"),
+                Arguments.of("/producer/put-request-producer-null-fields-400.json")
+        );
     }
 
 

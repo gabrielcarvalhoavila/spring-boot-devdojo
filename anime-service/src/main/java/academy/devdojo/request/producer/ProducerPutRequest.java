@@ -1,4 +1,8 @@
 package academy.devdojo.request.producer;
 
-public record ProducerPutRequest(Long id, String name) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record ProducerPutRequest(@NotNull(message = "Attribute 'id' is required") Long id,
+                                 @NotBlank(message = "Attribute 'name' is required") String name) {
 }

@@ -1,10 +1,13 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.controller.request.UserPostRequest;
+import academy.devdojo.controller.request.UserPutRequest;
 import academy.devdojo.controller.response.UserGetResponse;
 import academy.devdojo.controller.response.UserPostResponse;
 import academy.devdojo.mapper.UserMapper;
 import academy.devdojo.service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +26,8 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<UserGetResponse>> findAll(@RequestParam(required = false) String firstName) {
+    public ResponseEntity<List<UserGetResponse>> findAll(
+            @Valid @RequestParam(required = false) @Size(min = 2) String firstName) {
 
 
         var users = service.findAll(firstName);
@@ -46,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserPostResponse> save(@RequestBody UserPostRequest userPostRequest) {
+    public ResponseEntity<UserPostResponse> save(@Valid @RequestBody UserPostRequest userPostRequest) {
 
         var userToSave = mapper.toUser(userPostRequest);
 
@@ -59,7 +63,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody UserPutRequest userPutRequest) {
+    public ResponseEntity<Void> update(@Valid @RequestBody UserPutRequest userPutRequest) {
 
         var userToUpdate = mapper.toUser(userPutRequest);
 

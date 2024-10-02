@@ -1,4 +1,6 @@
 package academy.devdojo.request.producer;
 
-public record ProducerPostRequest(String name) {
+import jakarta.validation.constraints.NotBlank;
+
+public record ProducerPostRequest(@NotBlank(message = "Attribute 'name' is required") String name) {
 }

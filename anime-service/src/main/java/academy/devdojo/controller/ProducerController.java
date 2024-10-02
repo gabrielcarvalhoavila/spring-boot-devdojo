@@ -7,6 +7,7 @@ import academy.devdojo.request.producer.ProducerPutRequest;
 import academy.devdojo.response.producer.ProducerGetResponse;
 import academy.devdojo.response.producer.ProducerPostResponse;
 import academy.devdojo.service.ProducerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class ProducerController {
     }
 
     @PostMapping
-    public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest producerPostRequest) {
+    public ResponseEntity<ProducerPostResponse> save(@Valid @RequestBody ProducerPostRequest producerPostRequest) {
 
         log.debug("Request to save producer: '{}'", producerPostRequest);
 
@@ -62,6 +63,18 @@ public class ProducerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(producerPostResponse);
     }
 
+    @PutMapping
+    public ResponseEntity<Void> update(@Valid @RequestBody ProducerPutRequest producerPutRequest) {
+
+        log.debug("Request to update producer: '{}'", producerPutRequest);
+
+        var producer = mapper.toProducer(producerPutRequest);
+
+        producerService.update(producer);
+
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
 
@@ -71,18 +84,6 @@ public class ProducerController {
 
         return ResponseEntity.noContent().build();
 
-    }
-
-    @PutMapping
-    public ResponseEntity<Void> update(@RequestBody ProducerPutRequest producerPutRequest) {
-
-        log.debug("Request to update producer: '{}'", producerPutRequest);
-
-        var producer = mapper.toProducer(producerPutRequest);
-
-        producerService.update(producer);
-
-        return ResponseEntity.noContent().build();
     }
 
 

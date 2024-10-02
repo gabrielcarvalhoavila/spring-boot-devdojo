@@ -5,7 +5,11 @@ import academy.devdojo.commons.FileUtils;
 import academy.devdojo.model.Anime;
 import academy.devdojo.repository.AnimeData;
 import academy.devdojo.repository.AnimeRepositoryHardCoded;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @WebMvcTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -216,5 +222,86 @@ class AnimeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.status().reason("Anime not found"));
 
+    }
+
+    @ParameterizedTest
+    @MethodSource(value = "postArgumentsSource")
+    @DisplayName("POST /v1/animes throws BadRequest when fields are invalid")
+    @Order(11)
+    void save_ThrowsBadRequest_WhenFieldsAreInvalid(String filename, List<String> errorMessages) throws Exception {
+
+
+        var request = fileUtils.readResourcerFile(filename);
+
+
+        var mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/v1/animes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        Assertions.assertThat(mvcResult.getResolvedException()).isNotNull();
+
+        var errorMessage = mvcResult.getResolvedException().getMessage();
+
+        Assertions.assertThat(errorMessage).contains(errorMessages);
+
+    }
+
+    @ParameterizedTest
+    @MethodSource(value = "putArgumentsSource")
+    @DisplayName("PUT /v1/animes throws BadRequest when fields are invalid")
+    @Order(12)
+    void update_ThrowsBadRequest_WhenFieldsAreInvalid(String filename, List<String> errorMessages) throws Exception {
+
+        var request = fileUtils.readResourcerFile(filename);
+
+        var mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/v1/animes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        Assertions.assertThat(mvcResult.getResolvedException()).isNotNull();
+
+        var errorMessage = mvcResult.getResolvedException().getMessage();
+
+        Assertions.assertThat(errorMessage).contains(errorMessages);
+
+    }
+
+
+    private static Stream<Arguments> postArgumentsSource() {
+
+        var invalidFieldsErrors = allInvalidFieldsErrors();
+
+        return Stream.of(
+                Arguments.of("/anime/post-request-anime-empty-fields-400.json", invalidFieldsErrors),
+                Arguments.of("/anime/post-request-anime-blank-fields-400.json", invalidFieldsErrors),
+                Arguments.of("/anime/post-request-anime-null-fields-400.json", invalidFieldsErrors)
+
+        );
+    }
+
+    private static Stream<Arguments> putArgumentsSource() {
+
+        var idNullError = "The field 'id' is required";
+        var invalidFieldsErrors = allInvalidFieldsErrors();
+        invalidFieldsErrors.add(idNullError);
+
+        return Stream.of(
+                Arguments.of("/anime/put-request-anime-empty-fields-400.json", invalidFieldsErrors),
+                Arguments.of("/anime/put-request-anime-blank-fields-400.json", invalidFieldsErrors),
+                Arguments.of("/anime/put-request-anime-null-fields-400.json", invalidFieldsErrors)
+        );
+    }
+
+    private static List<String> allInvalidFieldsErrors() {
+        var nameInvalidError = "The field 'name' is required";
+        var episodesInvalidError = "The field 'episodes' is required";
+
+        return new ArrayList<>(List.of(nameInvalidError, episodesInvalidError));
     }
 }
