@@ -256,7 +256,7 @@ class ProducerControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource(value = "postArgumentsSource")
+    @MethodSource(value = "putArgumentsSource")
     @DisplayName("PUT v1/producers throws Bad Request when fields are invalid")
     @Order(11)
     void update_ThrowsBadRequest_WhenFieldsAreInvalid(String filename) throws Exception {
