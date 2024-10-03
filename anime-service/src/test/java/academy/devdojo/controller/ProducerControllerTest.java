@@ -20,7 +20,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -67,7 +66,7 @@ class ProducerControllerTest {
 
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
-        var response = fileUtils.readResourcerFile("producer/get-producer-null-name-200.json");
+        var response = fileUtils.readResourceFile("producer/get-producer-null-name-200.json");
 
         mockMvc.perform(MockMvcRequestBuilders.get(URL))
                 .andDo(MockMvcResultHandlers.print())
@@ -81,7 +80,7 @@ class ProducerControllerTest {
     void findAll_ReturnsListWithFoundObject_WhenNameExists() throws Exception {
 
 
-        var response = fileUtils.readResourcerFile("producer/get-producer-ufotable-name-200.json");
+        var response = fileUtils.readResourceFile("producer/get-producer-ufotable-name-200.json");
         var name = "Ufotable";
 
 
@@ -100,7 +99,7 @@ class ProducerControllerTest {
     @Order(3)
     void findAll_ReturnsEmptyList_WhenNameIsNotFound() throws Exception {
 
-        var response = fileUtils.readResourcerFile("producer/get-producer-x-name-200.json");
+        var response = fileUtils.readResourceFile("producer/get-producer-x-name-200.json");
         var name = "x";
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
@@ -117,7 +116,7 @@ class ProducerControllerTest {
     @Order(4)
     void findById_ReturnsProducer_WhenSuccessful() throws Exception {
 
-        var response = fileUtils.readResourcerFile("producer/get-producer-by-id-1-200.json");
+        var response = fileUtils.readResourceFile("producer/get-producer-by-id-1-200.json");
 
         var id = 1L;
 
@@ -137,12 +136,14 @@ class ProducerControllerTest {
 
         var id = 99L;
 
+        var response = fileUtils.readResourceFile("/producer/get-producer-by-id-404.json");
+
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
         mockMvc.perform(MockMvcRequestBuilders.get(URL + "/{id}", id))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.status().reason("Producer not found"));
+                .andExpect(MockMvcResultMatchers.content().json(response));
 
     }
 
@@ -157,8 +158,8 @@ class ProducerControllerTest {
         BDDMockito.when(repository.save(ArgumentMatchers.any())).thenReturn(producerToSave);
 
 
-        var request = fileUtils.readResourcerFile("producer/post-request-producer-200.json");
-        var response = fileUtils.readResourcerFile("producer/post-response-producer-201.json");
+        var request = fileUtils.readResourceFile("producer/post-request-producer-200.json");
+        var response = fileUtils.readResourceFile("producer/post-response-producer-201.json");
 
         mockMvc.perform(MockMvcRequestBuilders.post(URL).content(request).contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
@@ -178,11 +179,13 @@ class ProducerControllerTest {
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
 
-        var request = fileUtils.readResourcerFile("producer/put-request-producer-200.json");
+        var request = fileUtils.readResourceFile("producer/put-request-producer-200.json");
+
 
         mockMvc.perform(MockMvcRequestBuilders.put(URL).content(request).contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
+
 
     }
 
@@ -193,12 +196,13 @@ class ProducerControllerTest {
     void update_ThrowsResponseStatusException_WhenProducerNotFound() throws Exception {
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
-        var request = fileUtils.readResourcerFile("producer/put-request-producer-404.json");
+        var request = fileUtils.readResourceFile("producer/put-request-producer-404.json");
+        var response = fileUtils.readResourceFile("producer/put-response-producer-404.json");
 
         mockMvc.perform(MockMvcRequestBuilders.put(URL).content(request).contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.status().reason("Producer not found"));
+                .andExpect(MockMvcResultMatchers.content().json(response));
 
     }
 
@@ -227,10 +231,12 @@ class ProducerControllerTest {
 
         var id = 99L;
 
+        var response = fileUtils.readResourceFile("producer/delete-response-producer-404.json");
+
         mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/{id}", id))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.status().reason("Producer not found"));
+                .andExpect(MockMvcResultMatchers.content().json(response));
     }
 
     @ParameterizedTest
@@ -241,7 +247,7 @@ class ProducerControllerTest {
 
         var invalidNameError = "Attribute 'name' is required";
 
-        var request = fileUtils.readResourcerFile(filename);
+        var request = fileUtils.readResourceFile(filename);
 
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/v1/producers").contentType(MediaType.APPLICATION_JSON).content(request))
                 .andDo(MockMvcResultHandlers.print())
@@ -264,7 +270,7 @@ class ProducerControllerTest {
         var invalidNameError = "Attribute 'name' is required";
         var invalidIdError = "Attribute 'id' is required";
 
-        var request = fileUtils.readResourcerFile(filename);
+        var request = fileUtils.readResourceFile(filename);
 
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/v1/producers").contentType(MediaType.APPLICATION_JSON).content(request))
                 .andDo(MockMvcResultHandlers.print())
@@ -278,7 +284,7 @@ class ProducerControllerTest {
         Assertions.assertThat(errorMessage).contains(invalidNameError, invalidIdError);
     }
 
-    private static Stream<Arguments> postArgumentsSource(){
+    private static Stream<Arguments> postArgumentsSource() {
         return Stream.of(
                 Arguments.of("/producer/post-request-producer-blank-fields-400.json"),
                 Arguments.of("/producer/post-request-producer-empty-fields-400.json"),
@@ -286,7 +292,7 @@ class ProducerControllerTest {
         );
     }
 
-    private static Stream<Arguments> putArgumentsSource(){
+    private static Stream<Arguments> putArgumentsSource() {
         return Stream.of(
                 Arguments.of("/producer/put-request-producer-blank-fields-400.json"),
                 Arguments.of("/producer/put-request-producer-empty-fields-400.json"),

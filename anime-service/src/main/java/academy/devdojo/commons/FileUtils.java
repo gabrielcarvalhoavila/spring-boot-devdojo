@@ -13,7 +13,7 @@ public class FileUtils {
 
     private final ResourceLoader resourceLoader;
 
-    public String readResourcerFile(String filename) throws IOException {
+    public String readResourceFile(String filename) throws IOException {
         var file = resourceLoader.getResource("classpath:%s".formatted(filename)).getFile();
         return new String(Files.readAllBytes(file.toPath()));
     }
