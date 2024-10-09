@@ -11,7 +11,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<DefautlErrorMessage> handleNotFoundException(NotFoundException ex){
+    public ResponseEntity<DefautlErrorMessage> handleNotFoundException(NotFoundException ex) {
 
         var error = new DefautlErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getReason());
 

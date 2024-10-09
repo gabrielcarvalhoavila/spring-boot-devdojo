@@ -131,12 +131,14 @@ class UserControllerTest {
 
         var id = 9999L;
 
+        var response = fileUtils.readFromFile(RESOURCES_DIRECTORY + "/response/get-user-by-id-404.json");
+
         BDDMockito.when(userData.getUsers()).thenReturn(userList);
 
         mockMvc.perform(get(URL + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(status().reason("User not found"));
+                .andExpect(content().json(response));
     }
 
     @Test
@@ -179,12 +181,14 @@ class UserControllerTest {
 
         var id = 9999L;
 
+        var response = fileUtils.readFromFile(RESOURCES_DIRECTORY + "/response/delete-user-by-id-404.json");
+
         BDDMockito.when(userData.getUsers()).thenReturn(userList);
 
         mockMvc.perform(delete(URL + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(status().reason("User not found"));
+                .andExpect(content().json(response));
     }
 
     @Test
@@ -207,12 +211,14 @@ class UserControllerTest {
     void update_ThrowsResponseStatusException404_WhenIdIsNotFound() throws Exception {
 
         var request = fileUtils.readFromFile(RESOURCES_DIRECTORY + "/request/put-request-user-404.json");
+        var response = fileUtils.readFromFile(RESOURCES_DIRECTORY + "/response/put-response-user-404.json");
 
         BDDMockito.when(userData.getUsers()).thenReturn(userList);
 
         mockMvc.perform(put(URL).content(request).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(response));
     }
 
 

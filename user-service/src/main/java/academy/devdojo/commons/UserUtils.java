@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class UserUtils {
 
-    public List<User> createNewUserList(){
+    public List<User> createNewUserList() {
 
         var gabriel = new User(1L, "Gabriel", "Carvalho", "gabriel.carvalho@gmail.com");
         var dave = new User(2L, "Jane", "Smith", "Dave.Winchester@hotmail.com");
@@ -21,7 +21,7 @@ public class UserUtils {
         return new ArrayList<>(List.of(gabriel, dave, nelson, chris, emily, otakao));
     }
 
-    public User createNewUser(){
+    public User createNewUser() {
         return new User(7L, "Cleo", "Pum", "cleo-pum@globo.com");
     }
 }

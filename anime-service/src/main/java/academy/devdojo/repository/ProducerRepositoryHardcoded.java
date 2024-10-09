@@ -4,8 +4,6 @@ import academy.devdojo.model.Producer;
 import external.Connection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +20,7 @@ public class ProducerRepositoryHardcoded {
     private final ProducerData producers;
 
     public List<Producer> findAll() {
-       log.info("Connection {}", connection);
+        log.info("Connection {}", connection);
 
         return producers.getProducers();
     }

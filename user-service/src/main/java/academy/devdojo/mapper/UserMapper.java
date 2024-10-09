@@ -1,7 +1,7 @@
 package academy.devdojo.mapper;
 
-import academy.devdojo.controller.request.UserPutRequest;
 import academy.devdojo.controller.request.UserPostRequest;
+import academy.devdojo.controller.request.UserPutRequest;
 import academy.devdojo.controller.response.UserGetResponse;
 import academy.devdojo.controller.response.UserPostResponse;
 import academy.devdojo.model.User;

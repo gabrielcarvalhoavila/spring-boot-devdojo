@@ -25,7 +25,7 @@ public class ProducerUtils {
         return new ArrayList<>(List.of(ufotable, kyotoAnimation, a1Pictures, witStudio, trigger));
     }
 
-    public Producer getNewProducer(){
+    public Producer getNewProducer() {
         return Producer.builder().id(6L).name("Aniplex").createdAt(LocalDateTime.now()).build();
     }
 }

@@ -19,39 +19,37 @@ public class UserRepositoryHardcoded {
 
     }
 
-    public List<User> findByFirstName(String name){
+    public List<User> findByFirstName(String name) {
 
         return userData.getUsers().stream().filter(u -> u.getFirstName().equalsIgnoreCase(name)).toList();
 
     }
 
-    public Optional<User> findById(Long id){
+    public Optional<User> findById(Long id) {
 
         return userData.getUsers().stream().filter(u -> u.getId().equals(id)).findFirst();
 
     }
 
-    public User save(User user){
+    public User save(User user) {
 
         userData.getUsers().add(user);
 
         return user;
     }
 
-    public void delete(User user){
+    public void delete(User user) {
 
         userData.getUsers().remove(user);
     }
 
-    public void update(User user){
+    public void update(User user) {
 
         this.delete(user);
 
         this.save(user);
 
     }
-
-
 
 
 }

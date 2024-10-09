@@ -1,0 +1,33 @@
+spring:
+  config:
+    import: optional:classpath:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:3307/user_service?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER:root}
+    password: ${ENV_ROOT_PASSWORD:nikita}
+  jpa:
+    show-sql: true
+  application:
+    name: anime-service
+  threads:
+    virtual:
+      enabled: true
+server:
+  servlet:
+    context-path: /
+  error:
+    include-stacktrace: never
+  tomcat:
+    threads:
+      max: 20
+  port: 8090
+
+database:
+  url: ${DB_URL:localhost}:${DB_PORT:3306}
+  username: ${DB_USERNAME:root}
+  password: ${DB_PASSWORD:root}
+
+
+
+
+
